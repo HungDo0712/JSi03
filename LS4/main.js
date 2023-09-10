@@ -1,33 +1,10 @@
-let todoList = [
-    {
-      "id": 1,
-      "title": "Làm bài tập về nhà",
-      "completed": false
-    },
-    {
-      "id": 2,
-      "title": "Try hard GE",
-      "completed": false
-    },
-    {
-      "id": 3,
-      "title": "Nấu cơm",
-      "completed": false
-    },
-    {
-      "id": 4,
-      "title": "Rửa bát",
-      "completed": true
-    },
-    {
-      "id": 5,
-      "title": "Dọn nhà",
-      "completed": false
-    },
-  ]
+let todoList = []
   const todoListElm = document.getElementById("todoList");
   const inputTodoElm = document.getElementById("inputtodo");
   const addBtn = document.getElementById("add-btn");
+  const allBtn = document.getElementById("all")
+  const completedBtn = document.getElementById("completed")
+  const uncompletedBtn = document.getElementById("uncompleted")
 
  const handleDeleteTodo = (deleteId) => {
     const deleteIndex = todoList.findIndex((todo) => todo.id === deleteId);
@@ -78,18 +55,32 @@ const handleAddTodo = () => {
   }
 }
 
-const saveLocalStorage = () => {
-  localStorage.setItem('todos',JSON.stringify(todoList));
+const handleAllTodo = () => {
+  
 }
 
-const getLocalStorage = () => {
-  const todoListLocal = JSON.parse(localStorage.getItem('todos'));
-  if(todoListLocal) {
-    todoList = todoListLocal;
-  }
-  renderTodolist();
-}
+//const saveLocalStorage = () => {
+//  localStorage.setItem('todos',JSON.stringify(todoList));
+//}
+
+//const getLocalStorage = () => {
+ // const todoListLocal = JSON.parse(localStorage.getItem('todos'));
+  //if(todoListLocal) {
+  //  todoList = todoListLocal;
+  //}
+ // renderTodolist();
+//}
 
 addBtn.addEventListener('click',handleAddTodo);
 
-getLocalStorage();
+//getLocalStorage();
+
+const getTodoList = () => {
+   todoList = fetch("https://jsonplaceholder.typicode.com/todos?userId=1").then((response) =>{
+            return response.json();
+   }).then((data) => {
+    todoList = data;
+    renderTodolist();
+   });
+}
+getTodoList();
